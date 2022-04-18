@@ -1,0 +1,69 @@
+=== INSTRUCTIONS ===
+
+Each instruction takes up exactly 1 byte of memory, as the high nibble is the instruction opcode, and the low
+nibble is the instruction operand. Below you can see the instruction format:
+
+
+OPCODE    OPERAND
+0 0 0 0   0 0 0 0
+
+And a listing of instructions are listed below:
+
+0: LDA imm4
+1: LDX imm4
+2: LRA imm8
+3: LRX imm8
+5: XOR %ra, %rx
+6: ADD %ra, %rx
+7: SUB %ra, %rx
+8: AND %ra, %rx
+9: OR %ra, %rx
+A: NOT %ra
+B: JMP imm8
+C: JC imm8
+D: JZ imm8
+E: TAX
+F: TXA
+
+=== Architecture ===
+
+The Micro4004 CPU consists of a number of registers, including the two general purpose registers, %ra and %rx.
+These registers are (along with their sizes):
+
+    %ra: The accumulator register.      [4 bits]
+    %rx: The data register.             [4 bits]
+
+    %ma: The memory address register.   [8 bits]
+    %md: The memory data register.      [8 bits] + [4 bits from %ra]
+
+    %pc: The program counter register.  [8 bits]
+    %ir: The instruction register.      [8 bits]
+    %fl: The flags register             [2 bits]
+
+The memory address register is used to store the current memory address that is being accessed or read from by the
+processor. It also is directly used by the memory data register, which uses the current location set in the memory
+address register to read or write data to the memory.
+
+For example, if the memory address in the %ma is set to 0x2C, and the %md is instructed to perform a read, the %md
+will load the data from the memory location by setting the CPU's R/W bit to HIGH, and then loading from the memory
+on the next positive rising edge of the clock.
+When a write needs to occur, first, the memory data register is loaded with the data that you intend to write, and
+on the following clock cycle, the WRITE bit is set (i.e. Toggling the R/W bit LOW).
+
+The program counter is used to store the current location of execution in the program. It is controlled by a few
+signals, such as: Counter Enable - Enables the counting function of the program counter on the next clock edge,
+Counter Output - Outputs the current state of the counter onto the bus, Counter reset - Resets the counter, and
+Counter in - Loads the counter with the current data on the bus on the next rising edge of the clock.
+
+The instruction register is used to store the current instruction being executed. It is controlled by a few signals:
+Instruction In - Loads the data present on the bus, Instruction out - Outputs the lower 4 bits of the instruction
+register (the operand) onto the bus.
+
+The flags register (%fl) is also directly linked to the ALU, and latches the CARRY BIT on the full adder within the
+ALU when LATCH is set high. It also latches into the zero bit the result of a binary subtraction of %ra and %rb.
+This is done by inverting all 4 outputs of the subtraction, and then feeding them through an AND gate. The result
+is then stored in the second bit of %fl.
+
+The general purpose registers %ra and %rx are used by programs for general computation. In this architecture, %ra
+is the accumulator, and %rx is used in arithmetic operations. They can both be written to memory, loaded from memory
+or loaded with an immediate 4 bit value.
