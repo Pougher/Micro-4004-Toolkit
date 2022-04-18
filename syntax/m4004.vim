@@ -5,7 +5,7 @@ endif
 syn keyword m4004Reg ra rb
 syn keyword m4004Todo contained TODO
 syn match m4004Comment ";.*$" contains=m4004Todo
-syn match m4004Directive "^\s*[@][a-zA-Z]\+"
+syn match m4004Directive "^\s*[.][a-zA-Z]\+"
 syn match m4004Number "[0-9a-fA-F]h\+"
 syn match m4004Number "\<[0-9]\+D\=\>"
 syn match m4004Op "^\s*[a-zA-Z0-9_]\+\s"
