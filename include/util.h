@@ -6,6 +6,15 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
+
+
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    #include <unistd.h>
+#endif
+
 
 #include "opcode.h"
 
@@ -24,5 +33,8 @@ void append_asmop(AsmOp** array, uint32_t* len, AsmOp op);
 
 // Function to check if a hex string is valid.
 int is_hex(char* str);
+
+// Function to delay execution for a specified number of milliseconds.
+void delay(int millis);
 
 #endif

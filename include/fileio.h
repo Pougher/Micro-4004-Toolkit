@@ -12,4 +12,7 @@ char* load_file(const char* filename);
 // Function to write binary data to a file.
 void write_binary_file(char* name, unsigned char* data, size_t len);
 
+// Function to read a binary file into a character array.
+unsigned char* read_binary_file(char* name);
+
 #endif

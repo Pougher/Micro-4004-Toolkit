@@ -1,6 +1,9 @@
-/*****************************************/
-/* Micro 4004 Macro Assembler v1.0       */
-/*****************************************/
+/********************************************/
+/* Micro 4004 Macro Assembler v1.1          */
+/* Part of the Micro 4004 Toolkit           */
+/*                                          */
+/* MIT License, redistributable             */
+/********************************************/
 
 #include <stdio.h>
 #include <string.h>
@@ -18,7 +21,7 @@
 // Main function - execution starts here.
 int main(int argc, char** argv)
 {
-    printf("Micro4004 Macro Assembler [Version 1.0]\n"); 
+    printf("Micro4004 Macro Assembler [Version 1.1]\n"); 
     if (argc == 1) {
         printf("Usage: %s [-i <input file>] [-o <output file>]\n", argv[0]);
         exit(1);

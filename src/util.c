@@ -33,3 +33,13 @@ int is_hex(char* str)
     }
     return is_hex_;
 }
+
+void delay( int millis )
+{
+    #ifdef _WIN32
+        Sleep( millis );
+    #else
+        uint64_t time = (uint64_t)((((double)clock() / CLOCKS_PER_SEC)) * 1000 + millis);
+        while ((uint64_t)((((double)clock() / CLOCKS_PER_SEC)) * 1000) < time);
+    #endif
+}
